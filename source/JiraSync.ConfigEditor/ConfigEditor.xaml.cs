@@ -66,7 +66,20 @@ namespace JiraSync.ConfigEditor
 
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FieldMapsProperty =
-            DependencyProperty.Register("MyProperty", typeof(ObservableCollection<FieldMapViewModel>), typeof(ConfigEditor), new PropertyMetadata(null));
+            DependencyProperty.Register("FieldMaps", typeof(ObservableCollection<FieldMapViewModel>), typeof(ConfigEditor), new PropertyMetadata(null));
+
+
+
+
+        public ObservableCollection<FieldMapViewModel> ToscaToJiraMaps
+        {
+            get { return (ObservableCollection<FieldMapViewModel>)GetValue(ToscaToJiraMapsProperty); }
+            set { SetValue(ToscaToJiraMapsProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ToscaToJiraMaps.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ToscaToJiraMapsProperty =
+            DependencyProperty.Register("ToscaToJiraMaps", typeof(ObservableCollection<FieldMapViewModel>), typeof(ConfigEditor), new PropertyMetadata(null));
 
 
 

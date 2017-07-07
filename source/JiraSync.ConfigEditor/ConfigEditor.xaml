@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:JiraSync.ConfigEditor"
         mc:Ignorable="d"
         Title="Configuration Editor"  Width="600" MaxHeight="600" SizeToContent="Height" Closing="Window_Closing">
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -23,10 +25,10 @@
                 <ColumnDefinition Width="Auto" ></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0">Please enter the below values:</Label>
-            <Label Grid.Row="1" HorizontalAlignment="Right" Grid.Column="0"  ToolTip="For example: https://your_org.atlassian.net">Jira Base URL</Label>
-            <Label Grid.Row="2" HorizontalAlignment="Right" Grid.Column="0" ToolTip="This is a filter for your search, you can find it in the URL on the issues page. if the url reads 'jql=priority=medium', then copy 'priority=medium'">JQL Filter</Label>
-            <Label Grid.Row="3" HorizontalAlignment="Right" Grid.Column="0" ToolTip="For Issue sync only. This is the short form acronym of the project, and is usually at the start of your ticket numbers. For example, if a ticket is TD-443, the project key is TD">Project Key</Label>
+            <Label Grid.Row="0" Grid.ColumnSpan="2" FontSize="20" FontWeight="Bold" Grid.Column="0">Please enter the below values:</Label>
+            <Label Grid.Row="1" HorizontalAlignment="Right" Grid.Column="0" FontWeight="Bold" Margin="0,0,5,0" ToolTip="For example: https://your_org.atlassian.net">Jira Base URL</Label>
+            <Label Grid.Row="2" HorizontalAlignment="Right" Grid.Column="0" FontWeight="Bold" Margin="0,0,5,0" ToolTip="This is a filter for your search, you can find it in the URL on the issues page. if the url reads 'jql=priority=medium', then copy 'priority=medium'">JQL Filter</Label>
+            <Label Grid.Row="3" HorizontalAlignment="Right" Grid.Column="0" FontWeight="Bold" Margin="0,0,5,0" ToolTip="For Issue sync only. This is the short form acronym of the project, and is usually at the start of your ticket numbers. For example, if a ticket is TD-443, the project key is TD">Project Key</Label>
             <TextBox Grid.Row="1" Grid.Column="1" Text ="{Binding Config.BaseURL}"></TextBox>
             <TextBox Grid.Row="2" Grid.Column="1" Text ="{Binding Config.JQLFilter}"></TextBox>
             <TextBox Grid.Row="3" Grid.Column="1" Text ="{Binding Config.ProjectKey}"></TextBox>
@@ -41,11 +43,29 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.ColumnSpan="2" Margin="10" HorizontalAlignment="Left">Field Mapping</Label>
-            <ListView Grid.Row="1" ItemsSource="{Binding FieldMaps}" MinHeight="400">
+            <Label Grid.Row="0" FontSize="20" FontWeight="Bold" Grid.ColumnSpan="2" Margin="10" HorizontalAlignment="Left">Jira to Tosca Mapping</Label>
+            <ListView Grid.Row="1" ItemsSource="{Binding FieldMaps}" MinHeight="300">
                 <ListView.View>
                     <GridView>
+                        <GridView.ColumnHeaderContainerStyle>
+                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                                            <Border BorderThickness="0,0,0,1" BorderBrush="Black" Background="Transparent">
+                                                <TextBlock x:Name="ContentHeader" FontWeight="Bold" FontSize="14" Text="{TemplateBinding Content}" Padding="5,5,5,0"  TextAlignment="Center" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="OverridesDefaultStyle" Value="True" />
+                                <Setter Property="Foreground" Value="Black" />
+                                <Setter Property="FontFamily" Value="Segoe UI" />
+                                <Setter Property="FontSize" Value="12" />
+                            </Style>
+                        </GridView.ColumnHeaderContainerStyle>
                         <GridViewColumn Width="Auto" Header="Map?" >
+
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <CheckBox Padding="10" IsChecked="{Binding Map}"></CheckBox>

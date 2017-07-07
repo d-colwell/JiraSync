@@ -22,6 +22,8 @@ namespace JiraSync.Addins
         {
             RequirementSet rs = (RequirementSet)requirementSet;
             JiraConfig config = rs.GetJiraConfig();
+            
+            #region Setup
             if (config == null)
             {
                 string url = taskContext.GetStringValue("Jira Instance URL: ", false);
@@ -56,6 +58,8 @@ namespace JiraSync.Addins
                     Password = password
                 });
             }
+            #endregion
+
             var jira = new JiraService.Jira(config.baseURL, username, password);
             var issueService = jira.GetIssueService();
             String startTime = DateTime.Now.ToString("yyyyMMddHHmmss");
@@ -78,17 +82,19 @@ namespace JiraSync.Addins
             {
                 taskContext.ShowStatusInfo($"Error synchronising: {e.Message}");
             }
-
+            HashSet<string> updatedItems = new HashSet<string>();
             if (issues != null)
             {
                 foreach (var issue in issues)
                 {
-                    CreateOrUpdateRequirement(rs, config, issue);
+                    var req = CreateOrUpdateRequirement(rs, config, issue);
+                    updatedItems.Add(req.UniqueId);
                 }
 
                 // Prompt status
                 taskContext.ShowMessageBox("Jira Sync", issues.Length.ToString() + " requirements have been synchronised.");
             }
+            var 
             return null;
         }
 
